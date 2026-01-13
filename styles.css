@@ -14,17 +14,35 @@
     --text-primary: #f1f5f9;
     --text-secondary: #94a3b8;
     --border-color: #334155;
+    --gradient-start: #0f172a;
+    --gradient-end: #1e293b;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --modal-bg: rgba(0, 0, 0, 0.8);
+}
+
+/* Light mode theme */
+body.light-mode {
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --gradient-start: #f1f5f9;
+    --gradient-end: #e0e7ff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --modal-bg: rgba(0, 0, 0, 0.5);
 }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--text-primary);
     padding: 20px;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -32,9 +50,10 @@ body {
     max-width: 700px;
     background: var(--card-bg);
     border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px var(--shadow-color);
     padding: 40px;
     animation: fadeIn 0.5s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 @keyframes fadeIn {
@@ -79,6 +98,43 @@ h1 .gradient-text {
 .subtitle {
     color: var(--text-secondary);
     font-size: 1.1rem;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.theme-toggle {
+    padding: 10px;
+    width: 44px;
+    height: 44px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--bg-color);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
+    box-shadow: 0 5px 20px var(--shadow-color);
+}
+
+.theme-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-icon {
+    transform: rotate(20deg);
 }
 
 .learn-btn {
@@ -383,7 +439,7 @@ h1 .gradient-text {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: var(--modal-bg);
     animation: fadeIn 0.3s ease;
 }
 
@@ -550,8 +606,14 @@ h1 .gradient-text {
         text-align: center;
     }
 
-    .learn-btn {
+    .header-buttons {
         width: 100%;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .learn-btn {
+        flex: 1;
     }
 
     .modal-content {

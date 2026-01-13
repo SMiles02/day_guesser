@@ -1,3 +1,26 @@
+// Theme toggle functionality
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = themeToggle.querySelector('.theme-icon');
+
+// Load saved theme or default to dark
+const savedTheme = localStorage.getItem('theme') || 'dark';
+if (savedTheme === 'light') {
+    document.body.classList.add('light-mode');
+    themeIcon.textContent = '☀️';
+}
+
+// Toggle theme
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    const isLight = document.body.classList.contains('light-mode');
+    
+    // Update icon
+    themeIcon.textContent = isLight ? '☀️' : '🌙';
+    
+    // Save preference
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+});
+
 // Game state
 let gameState = {
     mode: 'practice',
