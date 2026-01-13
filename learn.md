@@ -1,4 +1,4 @@
-# 🧠 The Doomsday Rule — Mental Method for Finding the Day of the Week
+# 🧠 The Doomsday Rule
 
 The **Doomsday Rule**, devised by John Horton Conway, is a clever mental algorithm that lets you determine the day of the week for any date — entirely in your head.
 
