@@ -11,7 +11,10 @@ python3 -m http.server 8000
 
 Then open your browser to: `http://localhost:8000`
 
-To stop the server, press `Ctrl+C` in the terminal.
+To stop the server:
+```bash
+pkill -f "python3 -m http.server 8000"
+```
 
 ## How to Use
 
