@@ -5,7 +5,6 @@ A web application to test your ability to calculate what day of the week a given
 ## Test Locally
 
 ```bash
-cd day_guesser
 python3 -m http.server 8000
 ```
 
