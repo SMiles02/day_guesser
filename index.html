@@ -5,12 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Day of the Week Guesser</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- MathJax Configuration (must come before MathJax script) -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <!-- MathJax for LaTeX rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>📅 Day of the Week Guesser</h1>
-            <p class="subtitle">Test your calendar calculation skills!</p>
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>📅 Day of the Week Guesser</h1>
+                    <p class="subtitle">Test your calendar calculation skills!</p>
+                </div>
+                <button class="learn-btn" id="learnBtn">🧠 Learn!</button>
+            </div>
         </header>
 
         <div class="settings-panel" id="settingsPanel">
@@ -95,6 +118,19 @@
                 </div>
             </div>
             <button class="start-btn" id="backToSettings">Back to Settings</button>
+        </div>
+    </div>
+
+    <!-- Learn Modal -->
+    <div class="modal" id="learnModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Learn the Doomsday Rule</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body" id="learnContent">
+                Loading...
+            </div>
         </div>
     </div>
 

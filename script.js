@@ -256,4 +256,85 @@ endYearInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') startGame();
 });
 
+// Learn Modal functionality
+const learnBtn = document.getElementById('learnBtn');
+const learnModal = document.getElementById('learnModal');
+const closeModal = document.getElementById('closeModal');
+const learnContent = document.getElementById('learnContent');
+
+// Load and display the learn content
+async function loadLearnContent() {
+    try {
+        const response = await fetch('learn.md');
+        let markdown = await response.text();
+        
+        // Protect LaTeX expressions from markdown parser
+        const mathBlocks = [];
+        let mathIndex = 0;
+        
+        // Store display math \[...\]
+        markdown = markdown.replace(/\\\[([\s\S]*?)\\\]/g, (match) => {
+            const placeholder = `MATHBLOCK${mathIndex}ENDMATH`;
+            mathBlocks[mathIndex] = match;
+            mathIndex++;
+            return placeholder;
+        });
+        
+        // Store inline math \(...\)
+        markdown = markdown.replace(/\\\((.*?)\\\)/g, (match) => {
+            const placeholder = `MATHBLOCK${mathIndex}ENDMATH`;
+            mathBlocks[mathIndex] = match;
+            mathIndex++;
+            return placeholder;
+        });
+        
+        // Parse markdown to HTML
+        let htmlContent = marked.parse(markdown);
+        
+        // Restore LaTeX expressions
+        for (let i = 0; i < mathBlocks.length; i++) {
+            htmlContent = htmlContent.replace(`MATHBLOCK${i}ENDMATH`, mathBlocks[i]);
+        }
+        
+        learnContent.innerHTML = htmlContent;
+        
+        // Trigger MathJax to render LaTeX
+        if (window.MathJax) {
+            MathJax.typesetPromise([learnContent]).catch((err) => console.log('MathJax error:', err));
+        }
+    } catch (error) {
+        learnContent.innerHTML = '<p style="color: var(--error-color);">Error loading content. Please try again.</p>';
+        console.error('Error loading learn content:', error);
+    }
+}
+
+// Open modal
+learnBtn.addEventListener('click', () => {
+    learnModal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    loadLearnContent();
+});
+
+// Close modal
+closeModal.addEventListener('click', () => {
+    learnModal.style.display = 'none';
+    document.body.style.overflow = 'auto'; // Restore scrolling
+});
+
+// Close modal when clicking outside
+window.addEventListener('click', (e) => {
+    if (e.target === learnModal) {
+        learnModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && learnModal.style.display === 'block') {
+        learnModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+});
+
 
