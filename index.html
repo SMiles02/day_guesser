@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day of the Week Guesser</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Day of the Week Guesser</h1>
+            <p class="subtitle">Test your calendar calculation skills!</p>
+        </header>
+
+        <div class="settings-panel" id="settingsPanel">
+            <h2>Settings</h2>
+            
+            <div class="setting-group">
+                <label for="startYear">Start Year:</label>
+                <input type="number" id="startYear" min="1" max="9999" value="1900">
+            </div>
+            
+            <div class="setting-group">
+                <label for="endYear">End Year:</label>
+                <input type="number" id="endYear" min="1" max="9999" value="2099">
+            </div>
+            
+            <div class="setting-group">
+                <label>Mode:</label>
+                <div class="mode-buttons">
+                    <button class="mode-btn active" data-mode="practice">Practice</button>
+                    <button class="mode-btn" data-mode="timed">Timed Test</button>
+                </div>
+            </div>
+            
+            <div class="setting-group timer-settings" id="timerSettings" style="display: none;">
+                <label>Timer Duration:</label>
+                <div class="timer-buttons">
+                    <button class="timer-btn active" data-duration="60">1 min</button>
+                    <button class="timer-btn" data-duration="180">3 min</button>
+                    <button class="timer-btn" data-duration="300">5 min</button>
+                </div>
+            </div>
+            
+            <button class="start-btn" id="startBtn">Start</button>
+        </div>
+
+        <div class="game-panel" id="gamePanel" style="display: none;">
+            <div class="stats-bar">
+                <div class="stat">
+                    <span class="stat-label">Streak:</span>
+                    <span class="stat-value" id="streak">0</span>
+                </div>
+                <div class="stat timer-stat" id="timerDisplay" style="display: none;">
+                    <span class="stat-label">Time:</span>
+                    <span class="stat-value" id="timeRemaining">0:00</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Total Correct:</span>
+                    <span class="stat-value" id="totalCorrect">0</span>
+                </div>
+            </div>
+
+            <div class="date-display">
+                <h2 id="dateQuestion">January 1, 2000</h2>
+                <p class="date-hint">What day of the week is this?</p>
+            </div>
+
+            <div class="feedback" id="feedback"></div>
+
+            <div class="day-buttons">
+                <button class="day-btn" data-day="0">Sunday</button>
+                <button class="day-btn" data-day="1">Monday</button>
+                <button class="day-btn" data-day="2">Tuesday</button>
+                <button class="day-btn" data-day="3">Wednesday</button>
+                <button class="day-btn" data-day="4">Thursday</button>
+                <button class="day-btn" data-day="5">Friday</button>
+                <button class="day-btn" data-day="6">Saturday</button>
+            </div>
+
+            <button class="stop-btn" id="stopBtn">Stop & Return to Settings</button>
+        </div>
+
+        <div class="results-panel" id="resultsPanel" style="display: none;">
+            <h2>🎉 Test Complete!</h2>
+            <div class="results-stats">
+                <div class="result-stat">
+                    <span class="result-label">Total Correct:</span>
+                    <span class="result-value" id="finalCorrect">0</span>
+                </div>
+                <div class="result-stat">
+                    <span class="result-label">Best Streak:</span>
+                    <span class="result-value" id="finalStreak">0</span>
+                </div>
+            </div>
+            <button class="start-btn" id="backToSettings">Back to Settings</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
