@@ -54,6 +54,7 @@ body {
     padding: 40px;
     animation: fadeIn 0.5s ease;
     transition: background 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
 }
 
 @keyframes fadeIn {
@@ -73,19 +74,19 @@ header {
 
 .header-content {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 25px;
 }
 
 .header-text {
     text-align: center;
-    flex: 1;
 }
 
 h1 {
     font-size: 2.5rem;
     margin-bottom: 10px;
+    white-space: nowrap;
 }
 
 h1 .gradient-text {
@@ -100,13 +101,10 @@ h1 .gradient-text {
     font-size: 1.1rem;
 }
 
-.header-buttons {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
 .theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     padding: 10px;
     width: 44px;
     height: 44px;
@@ -120,6 +118,7 @@ h1 .gradient-text {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
 }
 
 .theme-toggle:hover {
@@ -148,6 +147,7 @@ h1 .gradient-text {
     cursor: pointer;
     transition: all 0.3s;
     white-space: nowrap;
+    min-width: 150px;
 }
 
 .learn-btn:hover {
@@ -586,10 +586,12 @@ h1 .gradient-text {
 @media (max-width: 600px) {
     .container {
         padding: 25px;
+        padding-top: 60px; /* Extra space for theme toggle */
     }
 
     h1 {
-        font-size: 2rem;
+        font-size: 1.6rem;
+        white-space: normal; /* Allow wrapping on very small screens */
     }
 
     .day-buttons {
@@ -601,19 +603,13 @@ h1 .gradient-text {
         gap: 15px;
     }
 
-    .header-content {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .header-buttons {
-        width: 100%;
-        flex-direction: row;
-        justify-content: center;
-    }
-
     .learn-btn {
-        flex: 1;
+        width: 100%;
+    }
+
+    .theme-toggle {
+        top: 15px;
+        right: 15px;
     }
 
     .modal-content {
