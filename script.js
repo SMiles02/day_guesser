@@ -30,6 +30,7 @@ let gameState = {
     currentDate: null,
     streak: 0,
     totalCorrect: 0,
+    totalQuestions: 0,
     bestStreak: 0,
     timerInterval: null,
     timeRemaining: 0,
@@ -48,6 +49,7 @@ const dateQuestion = document.getElementById('dateQuestion');
 const feedback = document.getElementById('feedback');
 const streakDisplay = document.getElementById('streak');
 const totalCorrectDisplay = document.getElementById('totalCorrect');
+const accuracyDisplay = document.getElementById('accuracy');
 const timerDisplay = document.getElementById('timerDisplay');
 const timeRemainingDisplay = document.getElementById('timeRemaining');
 const startYearInput = document.getElementById('startYear');
@@ -55,6 +57,7 @@ const endYearInput = document.getElementById('endYear');
 const timerSettings = document.getElementById('timerSettings');
 const finalCorrect = document.getElementById('finalCorrect');
 const finalStreak = document.getElementById('finalStreak');
+const finalAccuracy = document.getElementById('finalAccuracy');
 
 // Mode and timer button handlers
 document.querySelectorAll('.mode-btn').forEach(btn => {
@@ -151,6 +154,8 @@ function handleGuess(guessedDay, button) {
         btn.disabled = true;
     });
     
+    gameState.totalQuestions++;
+    
     if (guessedDay === correctDay) {
         // Correct answer
         button.classList.add('correct');
@@ -190,10 +195,19 @@ function handleGuess(guessedDay, button) {
     updateStats();
 }
 
+// Calculate accuracy percentage
+function calculateAccuracy() {
+    if (gameState.totalQuestions === 0) {
+        return 0;
+    }
+    return Math.round((gameState.totalCorrect / gameState.totalQuestions) * 100);
+}
+
 // Update statistics display
 function updateStats() {
     streakDisplay.textContent = gameState.streak;
     totalCorrectDisplay.textContent = gameState.totalCorrect;
+    accuracyDisplay.textContent = `${calculateAccuracy()}%`;
 }
 
 // Format time for display
@@ -247,6 +261,7 @@ function startGame() {
     gameState.endYear = endYear;
     gameState.streak = 0;
     gameState.totalCorrect = 0;
+    gameState.totalQuestions = 0;
     gameState.bestStreak = 0;
     
     // Hide settings, show game
@@ -273,6 +288,7 @@ function endGame() {
     
     finalCorrect.textContent = gameState.totalCorrect;
     finalStreak.textContent = gameState.bestStreak;
+    finalAccuracy.textContent = `${calculateAccuracy()}%`;
 }
 
 // Stop game and return to settings
