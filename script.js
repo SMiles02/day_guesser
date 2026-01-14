@@ -33,7 +33,8 @@ let gameState = {
     bestStreak: 0,
     timerInterval: null,
     timeRemaining: 0,
-    isAnswered: false
+    isAnswered: false,
+    questionStartTime: null
 };
 
 // DOM elements
@@ -108,6 +109,7 @@ function getDayName(dayIndex) {
 function generateNewQuestion() {
     gameState.currentDate = generateRandomDate();
     gameState.isAnswered = false;
+    gameState.questionStartTime = Date.now();
     dateQuestion.textContent = formatDate(gameState.currentDate);
     feedback.textContent = '';
     feedback.className = 'feedback';
@@ -119,12 +121,30 @@ function generateNewQuestion() {
     });
 }
 
+// Format time taken (in milliseconds)
+function formatTimeTaken(ms) {
+    if (ms < 1000) {
+        return `${ms}ms`;
+    } else if (ms < 60000) {
+        const seconds = (ms / 1000).toFixed(1);
+        return `${seconds}s`;
+    } else {
+        const minutes = Math.floor(ms / 60000);
+        const seconds = ((ms % 60000) / 1000).toFixed(0);
+        return `${minutes}m ${seconds}s`;
+    }
+}
+
 // Handle user guess
 function handleGuess(guessedDay, button) {
     if (gameState.isAnswered) return;
     
     gameState.isAnswered = true;
     const correctDay = gameState.currentDate.getDay();
+    
+    // Calculate time taken
+    const timeTaken = Date.now() - gameState.questionStartTime;
+    const timeText = formatTimeTaken(timeTaken);
     
     // Disable all buttons temporarily
     document.querySelectorAll('.day-btn').forEach(btn => {
@@ -139,7 +159,7 @@ function handleGuess(guessedDay, button) {
         if (gameState.streak > gameState.bestStreak) {
             gameState.bestStreak = gameState.streak;
         }
-        feedback.textContent = '✓ Correct!';
+        feedback.textContent = `✓ Correct! (${timeText})`;
         feedback.className = 'feedback correct';
         
         // Auto-advance after short delay
@@ -158,7 +178,7 @@ function handleGuess(guessedDay, button) {
         });
         
         gameState.streak = 0;
-        feedback.textContent = `✗ Incorrect! It was ${getDayName(correctDay)}.`;
+        feedback.textContent = `✗ Incorrect! It was ${getDayName(correctDay)}. (${timeText})`;
         feedback.className = 'feedback incorrect';
         
         // Auto-advance after longer delay to show correct answer
